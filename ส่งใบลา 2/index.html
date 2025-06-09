@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ระบบส่งใบลา</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>📄 ระบบส่งใบลา</h1>
+      <nav>
+        <a href="#form" class="active">ส่งใบลา</a>
+        <a href="#about">เกี่ยวกับ</a>
+      </nav>
+      <button id="logoutBtn" style="display:none; margin-left: 10px;">
+        🚪 ออกจากระบบ
+      </button>
+    </header>
+
+    <main>
+      <!-- หน้า Login -->
+      <section id="login" style="display: none;">
+        <h2>เข้าสู่ระบบ</h2>
+        <form id="loginForm">
+          <input
+            id="username"
+            placeholder="ชื่อผู้ใช้"
+            autocomplete="username"
+            required
+          />
+          <input
+            id="password"
+            type="password"
+            placeholder="รหัสผ่าน"
+            autocomplete="current-password"
+            required
+          />
+          <button type="submit">🔓 เข้าสู่ระบบ</button>
+        </form>
+      </section>
+
+      <!-- หน้าแบบฟอร์มส่งใบลา -->
+      <section id="form" style="display: none;">
+        <h2>ฟอร์มส่งใบลา</h2>
+        <form id="leaveForm">
+          <input
+            id="name"
+            name="name"
+            placeholder="ชื่อ-นามสกุล"
+            required
+            autocomplete="name"
+          />
+          <select id="type" name="type" required>
+            <option value="">-- ประเภทการลา --</option>
+            <option value="ลาป่วย">ลาป่วย</option>
+            <option value="ลากิจ">ลากิจ</option>
+            <option value="ลาพักร้อน">ลาพักร้อน</option>
+          </select>
+          <input id="date" type="date" name="date" required />
+          <textarea
+            id="reason"
+            name="reason"
+            placeholder="เหตุผล"
+            rows="3"
+            required
+          ></textarea>
+          <button type="submit">📤 ส่งใบลา</button>
+        </form>
+        <a
+          href="https://docs.google.com/spreadsheets/d/1W9Y5PZLLayPL5zbNZcZLgvg-kAw_uKiqMLp-gFD-xX8/edit?usp=sharing"
+          target="_blank"
+          class="sheet-button"
+          >📊 เปิดข้อมูลใน Google Sheets</a
+        >
+      </section>
+
+      <!-- หน้า About -->
+      <section id="about" style="display: none;">
+        <h2>เกี่ยวกับระบบ</h2>
+        <p>ระบบส่งใบลาภาษาไทย ใช้งานง่าย เชื่อมกับ Google Sheets</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 ระบบส่งใบลา | ทำเพื่อการศึกษา</p>
+    </footer>
+
+    <script>
+      // โหลด EmailJS SDK แบบไดนามิก
+      function loadEmailJS() {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = "https://cdn.emailjs.com/sdk/3.6.2/email.min.js";
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error('โหลด EmailJS SDK ไม่สำเร็จ'));
+          document.head.appendChild(script);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          await loadEmailJS();
+          emailjs.init("DciBaBqA0O9iqRqXz");
+          console.log('EmailJS initialized');
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
